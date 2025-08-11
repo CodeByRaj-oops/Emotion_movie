@@ -1,4 +1,4 @@
-// src/components/EmotionRecommender.js
+// src/components/EmotionRecommender.jsx
 import React, { useRef, useState, useEffect } from 'react';
 
 export default function EmotionRecommender() {
@@ -39,22 +39,22 @@ export default function EmotionRecommender() {
     setError('');
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/detect', {
+      const response = await fetch('http://127.0.0.1:5000/detect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: base64Image }),
       });
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || res.statusText);
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.error || response.statusText);
       }
 
-      const data = await res.json();
-      setEmotion(`${data.emotion} (${data.confidence.toFixed(2)}%)`);
+      const data = await response.json();
+      setEmotion(`${data.emotion} (${(data.confidence * 100).toFixed(2)}%)`);
       setMovies(data.recommendations || []);
     } catch (err) {
-      setError(err.message);
+      setError('Error: ' + err.message);
       setEmotion('');
     }
   };
@@ -63,7 +63,12 @@ export default function EmotionRecommender() {
     <div>
       <h1>🎭 Emotion-Based Movie Recommender</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <video ref={videoRef} autoPlay playsInline style={{ width: 320, height: 240, border: '1px solid black' }} />
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        style={{ width: 320, height: 240, border: '1px solid black' }}
+      />
       <br />
       <button onClick={captureAndSend}>Capture & Recommend</button>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
