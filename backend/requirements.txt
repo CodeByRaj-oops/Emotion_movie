@@ -1,0 +1,14 @@
+opencv-python → webcam access
+
+deepface & fer → emotion detection
+
+tmdbv3api & requests → fetch movies from TMDb
+
+python-dotenv → load .env variables
+
+tensorflow & keras → required by DeepFace models
+
+Pillow → image processing for base64 decoding
+
+flask
+
