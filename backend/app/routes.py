@@ -1,9 +1,12 @@
 # app/routes.py
+
 from flask import Flask, request, jsonify
-from emotion_detector import detect_emotion_from_base64
-from recommender import get_movies_for_emotion
+from flask_cors import CORS
+from .emotion_detector import detect_emotion_from_base64
+from .recommender import get_movies_for_emotion
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/detect", methods=["POST"])
 def detect_and_recommend():
